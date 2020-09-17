@@ -1,0 +1,10 @@
+__pycache__/
+*.so
+
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+*.mo
+*.log
+*.pot
