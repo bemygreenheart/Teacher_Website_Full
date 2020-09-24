@@ -8,4 +8,5 @@ pip-delete-this-directory.txt
 *.mo
 *.log
 *.pot
-./static
+static/
+media/

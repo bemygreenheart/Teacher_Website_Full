@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     # custom apps
     'home.apps.HomeConfig',
+    'blog.apps.BlogConfig',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_DIRS =[
     '/home/static',
 ]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+

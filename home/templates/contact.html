@@ -1,0 +1,108 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}
+  Contact | Nozima
+{% endblock  %}
+
+{% block content %}
+  <section id="contact-main" class="py-5 mt-5 ">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card  bg-dark text-white mb-3">
+          <div class="card-body">
+            <div class="card-text">
+              <h4 class="my-font">Address</h4>
+              <p class="small">Fergana, Bagdad 4</p>
+              <h4 class="my-font">Phone Number</h4>
+              <p class="small">90-629-3207</p>
+              <h4 class="my-font">Email</h4>
+              <p class="small">something@gmail.com</p>
+              <h4 class="my-font">Ticket Center</h4>
+              <p class="small">Go Now <a href="#"><i class="fas fa-arrow-right"></i></a></p>
+              <h4 class="my-font">Telegram Support</h4>
+              <p class="small">@jahathon</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card bg-dark text-white">
+          <div class="card-body">
+          <h3 class="text-center pb-3">Connect With Support Center</h3>
+          <form action="#" class="form">
+            <div class="form-group">
+            <div class="form-row">
+              <div class="col">
+                <input type="text" class="form-control" placeholder="First name">
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Last name">
+              </div>
+            </div>
+          </div>
+            <div class="form-group">
+              <input type="email" class="form-control" placeholder="Email Address">
+            </div>
+            <div class="form-group">
+              <textarea name="message" id="message" rows="6"  class="form-control" placeholder="Enter Your Message Here"></textarea>
+            </div>
+            <button type="submit" class="btn btn-outline-primary btn-block contact-button">Submit Now</button>
+          </form>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact-icons" class="pb-5 bg-dark text-white">
+  <div class="container">
+    <img src="{% static 'imgs/hr2.png' %}" class="img-fluid mx-auto d-block" alt="">
+    <div class="row px-5 pt-3">
+      <div class="col-3">
+        <i class="fab fa-telegram fa-3x"></i>
+      </div>
+      <div class="col-3">
+        <i class="fab fa-youtube fa-3x"></i>
+      </div>
+      <div class="col-3">
+        <i class="fab fa-twitter fa-3x"></i>
+      </div>
+      <div class="col-3">
+        <i class="fab fa-facebook fa-3x"></i>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- News Letter -->
+<section id="newsletter" class="py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5 align-self-center">
+        <h4 class="my-font text-center">Keep In Touch With US</h4> 
+      </div>
+      <div class="col-md-7">
+        <div class="d-flex justify-content-center">
+        <form action="" class="form-inline py-3">
+          <input type="email" class="form-control" placeholder="Email">       
+          <button class="btn btn-dark ml-2">Subscribe</button>
+        </form>  
+        </div>     
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id='main-footer' class="bg-dark text-center text-white py-1">
+    <div class="container">
+        <p>Copyright &copy; <span id="year"></span></p>
+        <h4>Java blog</h4>
+    </div>
+</footer>
+
+{% endblock  %}
