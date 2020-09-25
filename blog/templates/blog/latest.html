@@ -24,23 +24,28 @@
 <section id="blog-filter" class="muted-border bg-dark text-white mb-3">
   <h3 class="my-font text-center">Add Filter</h3>
   <div class="blog-container">
-    <form action="" method="GET" class="p-4 mx-4">
+    <div class="alert alert-danger alert-dismissible fade show mx-5 mt-3" id="filter-error" role="alert">
+    <p id="filter-error-text"></p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form action="" method="GET" class="p-4 mx-4" id="article-filter">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text">Title</span>
         </div>
-        <input type="text" class="form-control" id="keyword" placeholder="Enter Title Or Keywords In The Text">
+        <input type="text" name="keyword" class="form-control" id="keyword" placeholder="Enter Title Or Keywords In The Text">
       </div>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text">Category</span>
         </div>
         <select name="category" id="category" class="form-control">
-          <option selected>All</option>
-          <option value="sports">Sports</option>
-          <option value="education">Education</option>
-          <option value="business">Business</option>
-          <option value="media">Media</option>
+          <option value="" selected>All</option>
+          {% for category in categories %}
+            <option value="{{category.title}}">{{category.title|title}}</option>
+          {% endfor %}
         </select>
       </div>
 
@@ -48,14 +53,9 @@
         <div class="input-group-prepend">
           <span class="input-group-text">Month</span>
         </div>
-        <select name="month" id="month" class="form-control">
-          <option selected >None</option>
-          <option value="09-2020">Sep 2020</option>
-          <option value="08-2020">Aug 2020</option>
-          <option value="07-2020">Jul 2020</option>
-          <option value="06-2020">Jun 2020</option>
-        </select>
+        <input type="text" name="month" class="form-control" id="month" placeholder="yyyy-mm">
       </div>
+      <button type="submit" class="btn btn-outline-light btn-block">Search Now</button>
     </form>
   </div>
 </section>
@@ -86,7 +86,7 @@
       </div>
 
       {% empty %}
-        <h3>There is no articles here yet.</h3>
+        <h5 class="text-center text-muted my-5">There is no articles here yet.</h5>
       {% endfor %}
       
     </div>
@@ -118,4 +118,28 @@
     </div>
 </footer>
 
+{% endblock  %}
+
+{% block jscode %}
+  <script>
+  $(document).ready(function(){
+    $('#filter-error').hide();
+    $('#article-filter').submit(function(){
+      monthReg = new RegExp("^[12][0-9]{3}-((0[1-9])|(1[0-2]))$");
+      month = $('#month').val();
+      if(month==""){
+        return true;
+      }
+      if(monthReg.test(month)){
+        $('#filter-error').hide();
+      }
+      else{
+        $('#filter-error').show();
+        $('#filter-error-text').html('Wrong format, month should be like <b>YYYY-MM</b>');
+        return false;
+      }
+    });
+
+  });
+  </script>
 {% endblock  %}
