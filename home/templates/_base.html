@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock  %} </title>
+    <title>{% block title %}{% endblock  %} | Nozima</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
     crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap" rel="stylesheet">
@@ -26,24 +26,20 @@
         <li class="nav-item {% if request.path == '/' %} active {% endif %} ">
           <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown {% if '/blog/' in request.path %}active{% endif %} ">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Blog
             </a>
             <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Latest</a>
-              <a class="dropdown-item" href="#">Month Archive</a>
-              <a class="dropdown-item" href="#">Year Archive</a>
+              <a class="dropdown-item" href="{% url 'blog:latest' %}">Latest</a>
             </div>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown {% if '/quiz/' in request.path %}active{% endif %} ">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Quiz
           </a>
           <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Latest</a>
-            <a class="dropdown-item" href="#">Random</a>
-            <a class="dropdown-item" href="#">Search</a>
           </div>
         </li>
         <li class="nav-item {% if request.path == '/contact' %} active {% endif %} ">

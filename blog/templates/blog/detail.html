@@ -1,0 +1,102 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}
+  {{article.title}}
+{% endblock  %}
+
+{% block content %}
+  <!-- Detail Photo header -->
+<section id="detail-photo">
+  <div class="container cont">
+    <img src="{{ article.image.url }}" alt="">
+  </div>
+  <div class="container">
+    <h1 class="my-font my-4 text-center">{{ article.title }}</h1>
+    <div>{{ article.text|safe }}</div>
+    <p class="px-5 mr-2 my-4 text-right"><span class="text-muted"> &#x226a; {{ article.owner.username }} 	&#x226B;</span></p>
+  </div>
+</section>
+
+<!--Like or Unlike Section-->
+<div class="like">
+  <div class="container">
+  <p class="mx-5"><i class="far fa-thumbs-up fa-2x"></i> 
+    <i class="fas fa-thumbs-up fa-2x"></i> 
+    <span class="badge badge-dark align-middle">16</span></p>
+  <p><i class="far fa-thumbs-down fa-2x"></i> 
+    <i class="fas fa-thumbs-down fa-2x"></i>
+    <span class="badge badge-dark align-middle">0</span></p>
+    <hr>
+  </div>
+</div>
+
+<!-- Comments -->
+<section id="blog-comment">
+  <div class="container">
+    <form action="">
+      <div class="form-group">
+        <textarea class="form-control" placeholder="Add Comment..."></textarea>
+      </div>
+    </form>
+
+    <div class="comments">
+      <ul>
+        <li class="p-4">
+          <p class="ml-3"> <img src="../imgs/student1.jpg" alt=""><span class="my-font ml-2">Joseph Moore</span> <span class="small text-muted">2 days ago</span></p>
+          <p>Because the CCSS literacy in science standards predated the NGSS, 
+            developers of the NGSS worked directly with the CCSS team to identify 
+            the connections between the two sets of standards. However, questions 
+            about how the two sets of standards can complement each other and can be 
+            used in concert to improve students' reading and writing, as well as listening
+             and speaking, in science to learn science continue to exist.</p>
+        </li>
+
+        <li class="p-4">
+          <p class="ml-3"> <img src="../imgs/student2.jpg" alt=""><span class="my-font ml-2">Joseph Moore</span> <span class="small text-muted">2 days ago</span></p>
+          <p>Because the CCSS literacy in science standards predated the NGSS, 
+            developers of the NGSS worked directly with the CCSS team to identify 
+            the connections between the two sets of standards. However, questions 
+            about how the two sets of standards can complement each other and can be 
+            used in concert to improve students' reading and writing, as well as listening
+             and speaking, in science to learn science continue to exist.</p>
+        </li>
+
+        <li class="p-4">
+          <p class="ml-3"> <img src="../imgs/student3.jpg" alt=""><span class="my-font ml-2">Joseph Moore</span> <span class="small text-muted">2 days ago</span></p>
+          <p>Because the CCSS literacy in science standards predated the NGSS, 
+            developers of the NGSS worked directly with the CCSS team to identify 
+            the connections between the two sets of standards. However, questions 
+            about how the two sets of standards can complement each other and can be 
+            used in concert to improve students' reading and writing, as well as listening
+             and speaking, in science to learn science continue to exist.</p>
+        </li>
+
+        <li class="p-4">
+          <p class="ml-3"> <img src="" alt=""><span class="my-font ml-2">Joseph Moore</span> <span class="small text-muted">2 days ago</span></p>
+          <p>Because the CCSS literacy in science standards predated the NGSS, 
+            developers of the NGSS worked directly with the CCSS team to identify 
+            the connections between the two sets of standards. However, questions 
+            about how the two sets of standards can complement each other and can be 
+            used in concert to improve students' reading and writing, as well as listening
+             and speaking, in science to learn science continue to exist.</p>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<!-- Footer -->
+<footer id='main-footer' class="bg-dark text-center text-white py-1">
+    <div class="container">
+        <p>Copyright &copy; <span id="year"></span></p>
+        <h4>Java blog</h4>
+    </div>
+</footer>
+
+{% endblock  %}

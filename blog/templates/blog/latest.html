@@ -1,5 +1,10 @@
 {% extends '_base.html' %}
 {% load static %}
+{% load blog_escaper %}
+
+{% block title %}
+  Blog
+{% endblock  %}
 
 {% block content %}
   <!-- Blog Header -->
@@ -60,92 +65,53 @@
   <div class="blog-container">
     <div class="card-columns">
       
+      {% for article  in articles %}
+
       <div class="card">
-        <img class="card-img-top" src="https://source.unsplash.com/random?nature" alt="Card image cap">
+        {% if article.image %}
+        <img class="card-img-top" src=" {{ article.image.url }} " alt="Card image cap">
+        {% endif %}
         <div class="card-body bg-dark text-white">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to 
-            additional content. This content is a little bit longer.</p>
+          <a class="text-white" href=" {% url 'blog:detail' article.id article.slug %} ">
+          <h5 class="card-title">{{ article.title }}</h5>
+          </a>
+          <p class="card-text">{{article.text|myescaper|truncatechars:100}}</p>
             <div class="blog-labels">
-              <span class="badge badge-warning">Sport</span>
-              <span class="badge badge-warning">Business</span>
-              <span class="badge badge-warning">Management</span>
-              <span class="badge badge-warning">Education</span>
+              {% for category in article.category.all %}
+                <span class="badge badge-warning">{{ category.title }}</span>
+              {% endfor %}
             </div>
-            <p class="text-muted small text-right px-4"> Alex Rose</p>
+            <p class="text-muted small text-right px-4"> {{article.owner.username}} </p>
         </div>
-    </div>
-
-    <div class="card">
-      <img class="card-img-top" src="https://source.unsplash.com/random?technology" alt="Card image cap">
-      <div class="card-body bg-dark text-white">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to 
-          additional content. This content is a little bit longer.</p>
-          <div class="blog-labels">
-            <span class="badge badge-warning">Sport</span>
-            <span class="badge badge-warning">Business</span>
-            <span class="badge badge-warning">Management</span>
-            <span class="badge badge-warning">Education</span>
-          </div>
-          <p class="text-muted small text-right px-4"> Alex Rose</p>
       </div>
-  </div>
 
-  <div class="card">
-    <img class="card-img-top" src="https://source.unsplash.com/random?ocean" alt="Card image cap">
-    <div class="card-body bg-dark text-white">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to 
-        additional content. This content is a little bit longer.</p>
-        <div class="blog-labels">
-          <span class="badge badge-warning">Sport</span>
-          <span class="badge badge-warning">Business</span>
-          <span class="badge badge-warning">Management</span>
-          <span class="badge badge-warning">Education</span>
-        </div>
-        <p class="text-muted small text-right px-4"> Alex Rose</p>
-    </div>
-</div>
-
-<div class="card mb-3">
-  <img class="card-img-top" src="https://source.unsplash.com/random?person" alt="Card image cap">
-  <div class="card-body bg-dark text-white">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to 
-      additional content. This content is a little bit longer.</p>
-      <div class="blog-labels">
-        <span class="badge badge-warning">Sport</span>
-        <span class="badge badge-warning">Business</span>
-        <span class="badge badge-warning">Management</span>
-        <span class="badge badge-warning">Education</span>
-      </div>
-      <p class="text-muted small text-right px-4"> Alex Rose</p>
-  </div> 
-</div>
-
-<div class="card">
-  <img class="card-img-top" src="https://source.unsplash.com/random?home" alt="Card image cap">
-  <div class="card-body bg-dark text-white">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to 
-      additional content. This content is a little bit longer.</p>
-      <div class="blog-labels">
-        <span class="badge badge-warning">Sport</span>
-        <span class="badge badge-warning">Business</span>
-        <span class="badge badge-warning">Management</span>
-        <span class="badge badge-warning">Education</span>
-      </div>
-      <p class="text-muted small text-right px-4"> Alex Rose</p>
-  </div>
-</div>
-
+      {% empty %}
+        <h3>There is no articles here yet.</h3>
+      {% endfor %}
+      
     </div>
   </div>
 </section>
 
 <!-- Footer -->
 <footer id='main-footer' class="bg-dark text-center text-white py-1">
+  <div class="py-3" id="newsletter">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5 align-self-center">
+          <h4 class="my-font text-center">Keep In Touch With US</h4> 
+        </div>
+        <div class="col-md-7">
+          <div class="d-flex justify-content-center">
+          <form action="" class="form-inline py-3">
+            <input type="email" class="form-control" placeholder="Email">       
+            <button class="btn btn-outline-primary contact-button ml-2">Subscribe</button>
+          </form>  
+          </div>     
+        </div>
+      </div>
+    </div>
+  </div>
     <div class="container">
         <p>Copyright &copy; <span id="year"></span></p>
         <h4>Java blog</h4>
