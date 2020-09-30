@@ -1,5 +1,6 @@
 {% extends '_base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}
   {{article.title}}
@@ -7,10 +8,12 @@
 
 {% block content %}
   <!-- Detail Photo header -->
-<section id="detail-photo">
-  <div class="container cont">
+<section id="detail-photo" class="mt-5">
+{% if article.image %}
+  <div class="blog-container cont">
     <img src="{{ article.image.url }}" alt="">
   </div>
+{% endif %}
   <div class="container">
     <h1 class="my-font my-4 text-center">{{ article.title }}</h1>
     <div>{{ article.text|safe }}</div>
@@ -21,12 +24,14 @@
 <!--Like or Unlike Section-->
 <div class="like">
   <div class="container">
-  <p class="mx-5"><i class="far fa-thumbs-up fa-2x"></i> 
-    <i class="fas fa-thumbs-up fa-2x"></i> 
-    <span class="badge badge-dark align-middle">16</span></p>
-  <p><i class="far fa-thumbs-down fa-2x"></i> 
-    <i class="fas fa-thumbs-down fa-2x"></i>
-    <span class="badge badge-dark align-middle">0</span></p>
+  <p class="mx-5">
+    <i class="far fa-thumbs-up fa-2x {% if myfav_type == 1 %}like-hide{% endif %}" id="likeBtn" onclick="favorite('{% url 'blog:favorite' article.id article.slug %}', 1)"></i> 
+    <i class="fas fa-thumbs-up fa-2x {% if myfav_type == 1 %}like-show{% endif %}" id="likeBtn-filled" onclick="favorite('{% url 'blog:unfavorite' article.id article.slug  %}', 0)"></i> 
+    <span class="badge badge-dark align-middle" id="likes-count">{{ like_count }}</span></p>
+  <p>
+    <i class="far fa-thumbs-down fa-2x {% if myfav_type == 2 %}like-hide{% endif %}" id="unlikeBtn" onclick="favorite('{% url 'blog:favorite' article.id article.slug  %}', 2)"></i> 
+    <i class="fas fa-thumbs-down fa-2x {% if myfav_type == 2 %}like-show{% endif %}" id="unlikeBtn-filled" onclick="favorite('{% url 'blog:unfavorite' article.id article.slug  %}', 0)"></i>
+    <span class="badge badge-dark align-middle" id="dislikes-count">{{ dislike_count }}</span></p>
     <hr>
   </div>
 </div>
@@ -34,62 +39,33 @@
 <!-- Comments -->
 <section id="blog-comment">
   <div class="container">
-    <form action="">
+    <div class="alert alert-danger mx-5" role="alert" id="alert-block" style="display:none">
+      Unexpected error happened, please try again!
+    </div>
+
+    <form method="POST" action="{% url 'blog:create_comment' article.id article.slug %}">
+      {% csrf_token %}
       <div class="form-group">
-        <textarea class="form-control" placeholder="Add Comment..."></textarea>
+        <textarea class="form-control" placeholder="Add Comment..." name="text"></textarea>
       </div>
+      <input type="submit" class="btn btn-outline-dark btn-block">
     </form>
 
     <div class="comments">
       <ul>
-        <li class="p-4">
-          <p class="ml-3"> <img src="../imgs/student1.jpg" alt=""><span class="my-font ml-2">Joseph Moore</span> <span class="small text-muted">2 days ago</span></p>
-          <p>Because the CCSS literacy in science standards predated the NGSS, 
-            developers of the NGSS worked directly with the CCSS team to identify 
-            the connections between the two sets of standards. However, questions 
-            about how the two sets of standards can complement each other and can be 
-            used in concert to improve students' reading and writing, as well as listening
-             and speaking, in science to learn science continue to exist.</p>
+        {% for comment in comments %}
+           <li class="py-2">
+          <p class="ml-3"> <img src="{{comment.owner.reader.photo.url}}" alt=""><span class="my-font ml-2">{{comment.owner.username}}</span> <span class="small text-muted pl-2">{{comment.created_at|naturaltime}}</span></p>
+          <p>{{ comment.text }}</p>
         </li>
-
-        <li class="p-4">
-          <p class="ml-3"> <img src="../imgs/student2.jpg" alt=""><span class="my-font ml-2">Joseph Moore</span> <span class="small text-muted">2 days ago</span></p>
-          <p>Because the CCSS literacy in science standards predated the NGSS, 
-            developers of the NGSS worked directly with the CCSS team to identify 
-            the connections between the two sets of standards. However, questions 
-            about how the two sets of standards can complement each other and can be 
-            used in concert to improve students' reading and writing, as well as listening
-             and speaking, in science to learn science continue to exist.</p>
-        </li>
-
-        <li class="p-4">
-          <p class="ml-3"> <img src="../imgs/student3.jpg" alt=""><span class="my-font ml-2">Joseph Moore</span> <span class="small text-muted">2 days ago</span></p>
-          <p>Because the CCSS literacy in science standards predated the NGSS, 
-            developers of the NGSS worked directly with the CCSS team to identify 
-            the connections between the two sets of standards. However, questions 
-            about how the two sets of standards can complement each other and can be 
-            used in concert to improve students' reading and writing, as well as listening
-             and speaking, in science to learn science continue to exist.</p>
-        </li>
-
-        <li class="p-4">
-          <p class="ml-3"> <img src="" alt=""><span class="my-font ml-2">Joseph Moore</span> <span class="small text-muted">2 days ago</span></p>
-          <p>Because the CCSS literacy in science standards predated the NGSS, 
-            developers of the NGSS worked directly with the CCSS team to identify 
-            the connections between the two sets of standards. However, questions 
-            about how the two sets of standards can complement each other and can be 
-            used in concert to improve students' reading and writing, as well as listening
-             and speaking, in science to learn science continue to exist.</p>
-        </li>
-
+        {% empty %}
+          <p class="text-center text-muted p-3">Be the first to leave a comment</p>
+        {% endfor %}
+        
       </ul>
     </div>
   </div>
 </section>
-
-
-
-
 
 <!-- Footer -->
 <footer id='main-footer' class="bg-dark text-center text-white py-1">
@@ -99,4 +75,83 @@
     </div>
 </footer>
 
+{% if user.is_authenticated %}
+<script>var logged_in = true;</script>
+{% else %}
+<script>var logged_in = false;</script>
+{% endif %}
+{% endblock  %}
+
+
+{% block jscode %}
+  <script>
+  
+    var favorite = function(fav_url, fav_type){
+      data = JSON.stringify({f_type : fav_type});
+      console.log(data);
+      let csrftoken = getCookie('csrftoken');
+      console.log(csrftoken);
+      fetch(fav_url, {
+      method : 'POST',
+      mode : 'cors',
+      cache : 'no-cache',
+      credentials : 'same-origin',
+      headers: {
+        'Accept' : 'application/json, text/plain, */*',
+        'Content-Type' : 'application/json',
+        'X-CSRFToken' : csrftoken
+      },
+      redirect : 'follow',
+      body : data
+      })
+      .then(response => {
+        console.log('Got response');
+        return response.json();
+      })
+      .then(resdata => {
+        console.log(resdata);
+        adjust_fav_icons(resdata['fav_type']);
+        $('#likes-count').text(resdata['like_count']);
+        $('#dislikes-count').text(resdata['dislike_count']);
+      })
+      .catch(error => {
+        console.log(error);
+        show_error('Please login first to leave comment or reaction!');
+      });
+  }
+
+   function getCookie(name) {
+    return document.cookie.replace('csrftoken=', '');
+  }
+
+  function show_error(alert_text = ''){
+    $('#alert-block').show();
+    if(alert_text != ''){
+      $('#alert-block').html(alert_text);
+    }
+    $('#alert-block').delay(3000).fadeOut(1000);
+  }
+ 
+  function adjust_fav_icons(fav_type){
+    if(fav_type==0){
+      $('#likeBtn').show();
+      $('#likeBtn-filled').hide();
+      $('#unlikeBtn').show();
+      $('#unlikeBtn-filled').hide();
+    }
+    if(fav_type==1){
+      $('#likeBtn').hide();
+      $('#likeBtn-filled').show();
+      $('#unlikeBtn').show();
+      $('#unlikeBtn-filled').hide();
+    }
+    if(fav_type==2){
+      $('#likeBtn').show();
+      $('#likeBtn-filled').hide();
+      $('#unlikeBtn').hide();
+      $('#unlikeBtn-filled').show();
+    }
+  }
+
+  </script>
 {% endblock  %}

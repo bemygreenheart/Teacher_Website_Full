@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.conf.global_settings import AUTH_USER_MODEL
 
+
 FAV_CHOICES = ((1, 'LIKE'), (2, 'DISLIKE'))
 
 class Category(models.Model):
@@ -48,3 +49,13 @@ class Favorite(models.Model):
   fav_type = models.IntegerField(choices=FAV_CHOICES)
   owner = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
   article = models.ForeignKey(Article, on_delete = models.DO_NOTHING)
+
+  class Meta:
+    unique_together = ['owner', 'article']
+
+  def __str__(self):
+    mid = 'likes'
+    if self.fav_type == 2:
+      mid = 'dislikes'
+    return owner + mid + article
+

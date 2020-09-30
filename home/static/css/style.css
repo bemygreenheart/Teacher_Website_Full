@@ -342,7 +342,7 @@ div.dropdown-menu a:hover{
 }
 
 #detail-photo .cont{
-    max-height: 500px;
+    max-height: 700px;
     overflow: hidden;
 }
 
@@ -371,10 +371,6 @@ div.dropdown-menu a:hover{
 
 .like p{
     display: inline-block;
-}
-
-.like .fas {
-    display: none;
 }
 
 #detail-photo p{
@@ -583,4 +579,18 @@ div.dropdown-menu a:hover{
         margin-top: 100px;
     }
 }
+.like i{
+    cursor: pointer;
+}
 
+.like .fas{
+    display: none;
+}
+
+.like-show{
+    display: inline-block !important;
+}
+
+.like-hide{
+    display: none !important;
+}

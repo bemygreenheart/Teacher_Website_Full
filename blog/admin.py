@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Category, Article
+from home.models import Reader
 
 # Register your models here.
 class CategoryAdmin(admin.ModelAdmin):
@@ -17,3 +18,5 @@ class ArticleAdmin(admin.ModelAdmin):
     obj.save()
 
 admin.site.register(Article, ArticleAdmin)
+
+admin.site.register(Reader)
