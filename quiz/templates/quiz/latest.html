@@ -1,0 +1,181 @@
+{% extends '_base.html' %}
+{% load blog_escaper %}
+
+{% block title %} Quiz {% endblock  %}
+
+{% block content %}
+
+<!-- Quiz Header -->
+<section id="quiz-header">
+  <div class="my-overlay">
+  <div class="row">
+    <div class="col-md-6">
+      <p class="text-center p-0 m-0"><i class="fa fa-arrow-down fa-3x my-red" aria-hidden="true"></i></p>
+      <!-- Spinner -->
+      <div class="main">
+        <div class="box">
+          <div class="box1">
+            <span class="part1"><b>1</b></span>
+            <span class="part2"><b>2</b></span>
+            <span class="part3"><b>3</b></span>
+            <span class="part4"><b>4</b></span>
+          </div>
+          <div class="box2">
+            <span class="part1"><b>5</b></span>
+            <span class="part2"><b>6</b></span>
+            <span class="part3"><b>7</b></span>
+            <span class="part4"><b>8</b></span>
+          </div>
+        </div>
+        <a class="spin">shuffle</a>
+      </div>
+      <!-- End of spinner -->
+    </div>
+    <div class="col-md-6 py-2 d-none d-md-block">
+      <h2 class="display-3 my-font my-red">Test <span class="text-muted ml-2"> Yourself</span> </h2>
+      <p class="text-white lead p-4">Spin the wheel, let's see what kind of questions comes out!
+        It is amazing not to know how many or what kind of questions are waiting for you, is not it?
+        One more thing, it will take you to the quiz page automatically so don't panic!
+      </p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- Quiz Filter -->
+<section id="blog-filter" class="muted-border bg-dark text-white mb-3">
+  <h3 class="my-font text-center">Add Filter</h3>
+  <div class="blog-container">
+    <div class="alert alert-danger alert-dismissible fade show mx-5 mt-3" style="display:none" id="filter-error" role="alert">
+    <p id="filter-error-text"></p>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form action="" method="GET" class="p-4 mx-4" id="article-filter">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Title</span>
+        </div>
+        <input type="text" name="keyword" class="form-control" id="keyword" placeholder="Enter Title Or Keywords In The Text">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Category</span>
+        </div>
+        <select name="category" id="category" class="form-control">
+          <option value="" selected>All</option>
+          {% for category in categories %}
+            <option value="{{category.title}}">{{category.title|title}}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Month</span>
+        </div>
+        <input type="text" name="month" class="form-control" id="month" placeholder="yyyy-mm">
+      </div>
+      <button type="submit" class="btn btn-outline-light btn-block">Search Now</button>
+    </form>
+  </div>
+</section>
+
+
+<!-- Quiz List -->
+<section id="blog-list">
+  <div class="blog-container">
+    <div class="card-columns">
+
+      {% for quiz  in quizes %}
+
+      <div class="card">
+        {% if quiz.image %}
+        <img class="card-img-top" src=" {{ quiz.image.url }} " alt="Card image cap">
+        {% endif %}
+        <div class="card-body bg-dark text-white">
+          <a class="text-white" href=" {% url 'quiz:detail' quiz.id quiz.slug %} ">
+          <h5 class="card-title">{{ quiz.title }}</h5>
+          </a>
+          <p class="card-text">{{quiz.description|myescaper|truncatechars:100}}</p>
+            <div class="blog-labels">
+              {% for category in quiz.categories.all %}
+                <span class="badge badge-warning">{{ category.title }}</span>
+              {% endfor %}
+            </div>
+            <p class="text-muted small text-right px-4"> {{quiz.author.username}} </p>
+        </div>
+      </div>
+
+      {% empty %}
+        <h5 class="text-center text-muted my-5">There is no quizes here yet.</h5>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id='main-footer' class="bg-dark text-center text-white py-1">
+  <div class="py-3" id="newsletter">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5 align-self-center">
+          <h4 class="my-font text-center">Keep In Touch With US</h4> 
+        </div>
+        <div class="col-md-7">
+          <div class="d-flex justify-content-center">
+          <form action="" class="form-inline py-3">
+            <input type="email" class="form-control" placeholder="Email">       
+            <button class="btn btn-outline-primary contact-button ml-2">Subscribe</button>
+          </form>  
+          </div>     
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="container">
+        <p>Copyright &copy; <span id="year"></span></p>
+        <h4>Java blog</h4>
+    </div>
+</footer>
+
+{% endblock  %}
+
+{% block jscode %}
+<script>
+
+    $(document).ready(function(){
+      $('#quiz-header .spin').on('click', function(){
+        minVal = 1024;
+        maxVal = 9999;
+        var deg = Math.floor(Math.random()*(minVal-maxVal)) + maxVal;
+        $('#quiz-header .box').css('transform', 'rotate('+deg +"deg)");
+      });
+    });
+
+</script>
+
+<script>
+  $(document).ready(function(){
+    $('#filter-error').hide();
+    $('#article-filter').submit(function(){
+      monthReg = new RegExp("^[12][0-9]{3}-((0[1-9])|(1[0-2]))$");
+      month = $('#month').val();
+      if(month==""){
+        return true;
+      }
+      if(monthReg.test(month)){
+        $('#filter-error').hide();
+      }
+      else{
+        $('#filter-error').show();
+        $('#filter-error-text').html('Wrong format, month should be like <b>YYYY-MM</b>');
+        return false;
+      }
+    });
+
+  });
+  </script>
+{% endblock  %}

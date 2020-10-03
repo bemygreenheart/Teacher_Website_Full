@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     # custom apps
     'home.apps.HomeConfig',
     'blog.apps.BlogConfig',
+    'quiz.apps.QuizConfig',
+
+    # installed
 ]
 
 MIDDLEWARE = [

@@ -47,8 +47,8 @@ class Comment(models.Model):
 
 class Favorite(models.Model):
   fav_type = models.IntegerField(choices=FAV_CHOICES)
-  owner = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-  article = models.ForeignKey(Article, on_delete = models.DO_NOTHING)
+  owner = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
+  article = models.ForeignKey(Article, on_delete = models.CASCADE)
 
   class Meta:
     unique_together = ['owner', 'article']
@@ -57,5 +57,5 @@ class Favorite(models.Model):
     mid = 'likes'
     if self.fav_type == 2:
       mid = 'dislikes'
-    return owner + mid + article
+    return self.owner + mid + self.article
 

@@ -13,9 +13,9 @@ admin.site.register(Category, CategoryAdmin)
 class ArticleAdmin(admin.ModelAdmin):
   exclude = ('owner', 'slug')
 
-  def save_model(self, request,obj, *args, **kwargs):
+  def save_model(self, request,obj, form, change):
     obj.owner = request.user
-    obj.save()
+    super().save_model(request, obj, form, change)
 
 admin.site.register(Article, ArticleAdmin)
 

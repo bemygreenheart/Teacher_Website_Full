@@ -39,7 +39,7 @@
             Quiz
           </a>
           <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Latest</a>
+            <a class="dropdown-item" href=" {% url 'quiz:latest' %} ">Latest</a>
           </div>
         </li>
         <li class="nav-item {% if request.path == '/contact' %} active {% endif %} ">

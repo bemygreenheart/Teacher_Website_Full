@@ -5,8 +5,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('_nested_admin/', include('nested_admin.urls')),
     path('', include('home.urls')),
     path('blog/', include('blog.urls')),
+    path('quiz/', include('quiz.urls')),
 ]
 
 if settings.DEBUG ==True:
