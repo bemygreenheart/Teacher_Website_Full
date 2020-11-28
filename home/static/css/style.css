@@ -148,6 +148,12 @@ div.dropdown-menu a:hover{
     box-shadow: 5px 5px 5px#333 ;
 }
 
+#contact-main .col-md-8 .card input{
+    border: none;
+    outline: none;
+    background: #292b2c;
+}
+
 @media only screen and (min-width: 600px){
     #contact-icons .row{
         padding-left: 100px !important;
@@ -593,4 +599,53 @@ div.dropdown-menu a:hover{
 
 .like-hide{
     display: none !important;
+}
+
+/* Login Page (Newly added) */
+
+.login-content{
+    color: #fff;
+    padding: 40px 15px;
+    border-radius: 8px;
+}
+
+.login-content input, #contact-main .col-md-8 .card input,
+#contact-main .col-md-8 .card textarea{
+    border: none;
+    border-bottom: #e8e3D0 solid 1px;
+    background: transparent;
+    color: #fff;
+}
+
+.login-content input:focus, #contact-main .col-md-8 .card input:focus,
+#contact-main .col-md-8 .card textarea:focus{
+    outline-style: none;
+    box-shadow: none;
+    border-bottom: 3px solid  #e8e3D0 ;
+    background-color: transparent;
+    color: #fff;
+}
+
+#signup{
+    display: none;
+}
+
+#login-img{
+    width: 120px;
+    display: inline-block;
+    margin-top: -80px;
+}
+
+.margin-controller{
+    padding-top: 80px;
+    overflow-x: hidden;
+}
+@media only screen and (min-width: 780px){
+    .margin-controller{
+        margin: 100px 0;
+    }
+}
+
+#login-button, #sign-button{
+    cursor: pointer;
 }

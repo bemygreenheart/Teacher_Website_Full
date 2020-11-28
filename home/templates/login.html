@@ -1,0 +1,87 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block content %}
+  <section class="margin-controller">
+<!-- SignIn/SignUp Panel -->
+<div class="row text-center justify-content-center">
+  <div class="col-md-6 ">
+    <!-- Login form -->
+    <div id="login">
+      <div class="login-content my-4 bg-dark">
+        <img id="login-img" src="{% static 'imgs/avatar.png' %}" alt="">
+        <h2 class="my-font">Sign In</h2>
+        <p class="small">Don not have an account, <a id="login-button" class="text-danger">create</a> one here</p>
+        <form action="{% url 'signIn' %}" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+            <input type="text" class="form-control" name="username" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Password">
+          </div>
+          <button class="btn btn-block btn-outline-dark contact-button mt-5">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Sign form -->
+    <div id="signup">
+      <div class="login-content my-4 bg-dark">
+        <img id="login-img" src="{% static 'imgs/avatar.png' %}" alt="">
+        <h2 class="my-font">Sign Up</h2>
+        <p class="small">Already have an account, <a id="sign-button" class="text-danger">login</a> here</p>
+        <form action="{% url 'signUp' %}" method="POST">
+        {% csrf_token %}
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col">
+                <input type="text" class="form-control" placeholder="First name">
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Last name">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="username" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="password-confirm" placeholder="Confirm Password">
+          </div>
+          <button class="btn btn-block btn-outline-dark contact-button mt-5">Submit</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer id='main-footer' class="bg-dark text-center text-white py-1">
+    <div class="container">
+        <p>Copyright &copy; <span id="year"></span></p>
+        <h4>Java blog</h4>
+    </div>
+</footer>
+{% endblock  %}
+
+{% block jscode %}
+  <script>
+  $('#login-button').on('click', function(event){
+    event.preventDefault();
+    $('#login').hide();
+    $('#signup').show();
+  })
+
+  $('#sign-button').on('click', function(event){
+    event.preventDefault();
+    $('#login').show();
+    $('#signup').hide();
+  })
+</script>
+{% endblock  %}
