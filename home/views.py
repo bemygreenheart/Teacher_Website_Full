@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, View
+from django.contrib.auth import login, authenticate
 
 # Create your views here.
 class HomeTemplateView(TemplateView):
@@ -18,5 +19,13 @@ class ContactView(View):
     return 
 
     
-def login(request):
-  return render(request, 'login.html')
+def login_user(request):
+  if request.method=='GET':
+    return render(request, 'login.html')
+  else:
+    
+
+  
+
+def signup_user(request):
+  return None
