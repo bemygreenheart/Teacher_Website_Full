@@ -1,0 +1,70 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}
+  SignUp
+{% endblock  %}
+
+{% block content %}
+  <section class="margin-controller">
+<!-- SignIn/SignUp Panel -->
+<div class="row text-center justify-content-center">
+  <div class="col-md-6 ">
+
+    <!-- Sign form -->
+    <div id="signup" >
+      <div class="login-content my-4 bg-dark">
+        <img id="login-img" src="{% static 'imgs/avatar.png' %}" alt="">
+        <h2 class="my-font">Sign Up</h2>
+        {% if errors %}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {%for error in errors%} 
+            <p>{{error}}</p>
+            {% endfor %}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endif %}
+        <p class="small">Already have an account, <a href="{% url 'login' %}" id="sign-button" class="text-danger">login</a> here</p>
+        <form action="{% url 'signup' %}" method="POST" autocomplete="off">
+        {% csrf_token %}
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col">
+                <input type="text" class="form-control" value="{{ sign_data.first_name }}" placeholder="First name" name="first_name">
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" value="{{ sign_data.last_name }}" placeholder="Last name" name="last_name">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" value="{{ sign_data.email }}" name="email" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" value="{{ sign_data.username}}" name="username" placeholder="Username">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" value="{{ sign_data.password }}" name="password" placeholder="Password">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" value="{{ sign_data.password_confirm }}" name="password_confirm" placeholder="Confirm Password">
+          </div>
+          <button class="btn btn-block btn-outline-dark contact-button mt-5">Submit</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer id='main-footer' class="bg-dark text-center text-white py-1">
+    <div class="container">
+        <p>Copyright &copy; <span id="year"></span></p>
+        <h4>Java blog</h4>
+    </div>
+</footer>
+{% endblock  %}

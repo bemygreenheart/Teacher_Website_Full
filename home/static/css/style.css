@@ -626,10 +626,6 @@ div.dropdown-menu a:hover{
     color: #fff;
 }
 
-#signup{
-    display: none;
-}
-
 #login-img{
     width: 120px;
     display: inline-block;
